@@ -10,7 +10,7 @@ public class AdminUserController {
         this.adminUserService = adminUserService;
     }
 
-    boolean login(String username, String password) {
+    public boolean login(String username, String password) {
         return adminUserService.login(username, password);
     }
 }

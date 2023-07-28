@@ -18,8 +18,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-//        chushi
-//        init();
+        init();
         LibraryContext context = new LibraryContext();
         LibraryContext.addAdminUsers("Tom", "Tom1", "TOM");
         LibraryContext.addAdminUsers("David", "David1", "DAVID");
@@ -32,7 +31,7 @@ public class Main {
         System.out.println(JSON.toJSONString(db.getAdminUsers()));
         System.out.println(JSON.toJSONString(db.getStudentUsers()));
         System.out.println("Success");
-        //
+
     }
 
     public static void handleLogin() {
@@ -56,17 +55,15 @@ public class Main {
         scanner.close();
     }
 
-    private static void init() {
+    private static void init() throws IOException {
         //
-        String dir = "~/Desktop/";
-        String dbName = "lib.tx";
-        File file = new File(dir + dbName);
+        String dir = "/Users/haiyang/Desktop/DataBase.txt";
+        File file = new File(dir);
         if (file.exists()) {
-
+            LibraryContext db = FileUtils.deserialize("/Users/haiyang/Desktop/DataBase.txt");
         } else {
-
+            LibraryContext.addAdminUsers("Admin", "admin", "12345");
         }
     }
-
 
 }
