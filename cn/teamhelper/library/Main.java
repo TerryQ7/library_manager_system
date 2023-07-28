@@ -1,10 +1,14 @@
 package cn.teamhelper.library;
 
 import cn.teamhelper.library.controller.AdminUserController;
+import cn.teamhelper.library.entity.LibraryContext;
 import cn.teamhelper.library.service.IAdminUserService;
 import cn.teamhelper.library.service.impl.AdminUserServiceImpl;
+import cn.teamhelper.library.util.FileUtils;
+import com.alibaba.fastjson.JSON;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 
@@ -13,10 +17,21 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
-        // chushi
-        init();
+    public static void main(String[] args) throws IOException {
+//        chushi
+//        init();
+        LibraryContext context = new LibraryContext();
+        LibraryContext.addAdminUsers("Tom", "Tom1", "TOM");
+        LibraryContext.addAdminUsers("David", "David1", "DAVID");
+        LibraryContext.addStudentUsers("Jerry", "Jerry1", "JERRY");
+        LibraryContext.addStudentUsers("Andre", "Andre1", "ANDRE");
+        LibraryContext.addStudentUsers("Jack", "Jack1", "JACK");
 
+        FileUtils.serialize(context, "/Users/haiyang/Desktop/DataBase.txt");
+        LibraryContext db = FileUtils.deserialize("/Users/haiyang/Desktop/DataBase.txt");
+        System.out.println(JSON.toJSONString(db.getAdminUsers()));
+        System.out.println(JSON.toJSONString(db.getStudentUsers()));
+        System.out.println("Success");
         //
     }
 
