@@ -7,9 +7,7 @@ import cn.teamhelper.library.service.IAdminUserService;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /*
     数据库，存放账户信息
@@ -20,7 +18,7 @@ public class LibraryContext implements Serializable {
 
     private static final Map<String, StudentUser> studentUsers = new HashMap<>();
     private static final Map<String, AdminUser> adminUsers = new HashMap<>();
-    private static final Map<String, Book> books = new HashMap<>();
+    private static final List<Book> books = new ArrayList<>();
 
 
     public static Map<String, AdminUser> getAdminUsers() {
@@ -31,7 +29,7 @@ public class LibraryContext implements Serializable {
         return studentUsers;
     }
 
-    public static Map<String, Book> getBooks() {
+    public static List<Book> getBooks() {
         return books;
     }
 
@@ -45,18 +43,29 @@ public class LibraryContext implements Serializable {
         studentUsers.put(account, studentUser1);
     }
 
-    public static void addBooks(String id, String title, String author, Boolean status) {
+    public static void addBooks(int id, String title, String author, Boolean status) {
         Book book1 = new Book(id, title, author, status);
-        books.put(title, book1);
+        books.add(book1);
     }
 
-    public static Map<String, String> queryByUsername(String account) {
-        Map<String, String> toReturn = new HashMap<>();
+    public static void deleteBook(Book b) {
+
+    }
+
+    public static Map<String, AdminUser> queryByAdminUsername(String account) {
+        Map<String, AdminUser> toReturn = new HashMap<>();
         if (adminUsers.containsKey(account)) {
-            toReturn.put(account, adminUsers.get(account).getPassword());
+            toReturn.put(account, adminUsers.get(account));
             return toReturn;
-        } else if (studentUsers.containsKey(account)) {
-            toReturn.put(account, studentUsers.get(account).getPassword());
+        } else {
+            return null;
+        }
+    }
+
+    public static Map<String, StudentUser> queryByStudentUsername(String account) {
+        Map<String, StudentUser> toReturn = new HashMap<>();
+        if (studentUsers.containsKey(account)) {
+            toReturn.put(account, studentUsers.get(account));
             return toReturn;
         } else {
             return null;
@@ -64,7 +73,7 @@ public class LibraryContext implements Serializable {
     }
 
     public boolean findBooks(Book book) {
-        return books.containsKey(book.getTitle()) && (books.get(book.getTitle()).getAuthor().equals(book.getAuthor()));
+        return books.contains(book);
     }
 
 
